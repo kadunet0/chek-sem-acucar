@@ -1,0 +1,251 @@
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-hover: #334155;
+  --border: #334155;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --carlos: #38bdf8;
+  --amanda: #f472b6;
+  --ana: #a78bfa;
+  --success: #34d399;
+  --radius: 14px;
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  padding-bottom: calc(1.5rem + var(--safe-bottom));
+}
+
+.app {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 0;
+}
+
+.hero {
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+}
+
+h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.stat-pill {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.stat-pill strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.legend-item {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.carlos {
+  background: var(--carlos);
+}
+.dot.amanda {
+  background: var(--amanda);
+}
+.dot.ana {
+  background: var(--ana);
+}
+
+.days {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.day-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 0.65rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.75rem;
+  transition: border-color 0.15s ease;
+}
+
+.day-row.today {
+  border-color: var(--success);
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.25);
+}
+
+.day-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.day-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.day-weekday {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.checks {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.check-btn {
+  appearance: none;
+  border: 2px solid var(--border);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.check-btn:active {
+  transform: scale(0.96);
+}
+
+.check-btn[data-person="carlos"].on {
+  border-color: var(--carlos);
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.check-btn[data-person="amanda"].on {
+  border-color: var(--amanda);
+  background: rgba(244, 114, 182, 0.15);
+}
+
+.check-btn[data-person="ana"].on {
+  border-color: var(--ana);
+  background: rgba(167, 139, 250, 0.15);
+}
+
+.check-btn .initial {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.check-btn.on .initial {
+  display: none;
+}
+
+.check-btn .tick {
+  display: none;
+  width: 20px;
+  height: 20px;
+  color: var(--success);
+}
+
+.check-btn.on .tick {
+  display: block;
+}
+
+.footer {
+  margin-top: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn-secondary:active {
+  background: var(--surface);
+}
+
+@media (min-width: 380px) {
+  .check-btn {
+    width: 48px;
+    height: 48px;
+  }
+}
