@@ -6,6 +6,10 @@ App mobile (HTML/CSS/JS) para marcar, dia a dia, quem ficou sem açúcar. Compet
 
 Abra `index.html` no navegador do celular ou publique em qualquer hospedagem estática. As marcações ficam salvas no próprio aparelho (`localStorage`).
 
-## GitHub Pages
+## Site publicado (GitHub Pages)
 
-No repositório: **Settings → Pages → Build and deployment → Branch: `main` / folder `/ (root)`** e salve. O site ficará em `https://<seu-usuario>.github.io/<nome-do-repo>/`.
+**https://kadunet0.github.io/chek-sem-acucar/**
+
+Use exatamente esse endereço (com `/chek-sem-acucar/` no final). Só `https://kadunet0.github.io/` mostra 404 — é normal.
+
+Se não abrir de primeira: espere 1–2 minutos após um push, tente aba anônima ou atualize forçando (Ctrl+F5).
