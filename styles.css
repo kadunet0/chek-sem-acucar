@@ -6,7 +6,7 @@
   --text: #f1f5f9;
   --muted: #94a3b8;
   --carlos: #38bdf8;
-  --amanda: #f472b6;
+  --amanda: #a855f7;
   --ana: #a78bfa;
   --success: #34d399;
   --radius: 14px;
@@ -209,7 +209,7 @@ h1 {
 
 .check-btn[data-person="amanda"].on {
   border-color: var(--amanda);
-  background: rgba(244, 114, 182, 0.15);
+  background: rgba(168, 85, 247, 0.18);
 }
 
 .check-btn[data-person="ana"].on {
