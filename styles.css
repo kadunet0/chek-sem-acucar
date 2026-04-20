@@ -64,6 +64,23 @@ h1 {
   margin: 0;
 }
 
+.sync-status {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--success);
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius);
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+.sync-status.sync-offline {
+  color: var(--muted);
+  background: var(--surface);
+  border-color: var(--border);
+}
+
 .stats {
   display: flex;
   flex-wrap: wrap;

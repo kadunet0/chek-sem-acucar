@@ -20,7 +20,8 @@
       <header class="hero">
         <p class="eyebrow">Competição · abril–maio 2026</p>
         <h1>Chek sem açúcar</h1>
-        <p class="subtitle">Marque cada dia em que não comeram açúcar. Os dados ficam só no seu aparelho.</p>
+        <p class="subtitle">Marque cada dia em que não comeram açúcar. Com Firebase ativo, todos veem as mesmas marcações na hora.</p>
+        <p class="sync-status" id="syncStatus" role="status" aria-live="polite"></p>
         <div class="stats" id="stats" aria-live="polite"></div>
       </header>
 
@@ -36,6 +37,9 @@
         <button type="button" class="btn-secondary" id="resetBtn">Limpar tudo</button>
       </footer>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
