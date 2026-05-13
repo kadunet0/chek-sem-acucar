@@ -1,22 +1,33 @@
-# Chek — 1 mês sem açúcar
+chek-sem-acucar
 
-App mobile (HTML/CSS/JS) para marcar, dia a dia, quem ficou sem açúcar. Competição a partir de **21/04/2026**, 30 dias.
+Aplicativo mobile desenvolvido por Carlos Neto utilizando HTML, CSS e JavaScript, criado para acompanhar diariamente quem conseguiu ficar sem açúcar durante uma competição de 30 dias iniciada em 21/04/2026.
 
-## Sincronização em tempo real
+O projeto foi desenvolvido com foco em simplicidade, responsividade e sincronização em tempo real entre dispositivos.
 
-Por padrão o app continua funcionando **só no aparelho** (`localStorage`).
+Funcionalidades
+Controle diário da competição sem açúcar
+Interface responsiva para celular
+Armazenamento local com localStorage
+Sincronização em tempo real utilizando Firebase Realtime Database
+Atualização automática entre dispositivos conectados
+Tecnologias utilizadas
+HTML5
+CSS3
+JavaScript Vanilla
+Firebase Realtime Database
+Sincronização em tempo real
 
-Para **atualizar para todo mundo na hora** quando alguém marca um dia:
+Por padrão, o aplicativo funciona localmente utilizando localStorage.
 
-1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/).
-2. Ative **Realtime Database** (criar banco) e, em modo de desenvolvimento, use regras que permitam leitura/escrita no nó `chekSemAcucar` (exemplo abaixo).
-3. Em **Project settings** → **Your apps** → ícone Web, copie o objeto de configuração.
-4. Copie `firebase-config.example.js` para `firebase-config.js` e cole **apiKey**, **databaseURL**, **authDomain**, **projectId**, etc.
-5. Faça deploy (GitHub Pages ou outro). Abra o site em dois celulares: ao marcar em um, o outro atualiza sozinho.
+Para habilitar a sincronização em tempo real entre diferentes aparelhos:
 
-**Regras mínimas (apenas para teste; depois restrinja por domínio ou auth):**
+Crie um projeto no Firebase Console
+Ative o Realtime Database
+Configure as permissões temporárias de leitura e escrita
+Copie as configurações do Firebase para firebase-config.js
+Faça o deploy do projeto
+Exemplo de regras do Firebase (modo teste)
 
-```json
 {
   "rules": {
     "chekSemAcucar": {
@@ -25,18 +36,28 @@ Para **atualizar para todo mundo na hora** quando alguém marca um dia:
     }
   }
 }
-```
 
-Os dados em tempo real ficam em `chekSemAcucar/{dia}/{carlos|amanda|ana}`. O app ainda espelha no `localStorage` como backup quando o Firebase está ativo.
+Os dados são armazenados no formato:
 
-## Como usar (local)
+chekSemAcucar/{dia}/{carlos|amanda|ana}
 
-Abra `index.html` no navegador do celular ou publique em qualquer hospedagem estática.
+Mesmo utilizando Firebase, o sistema mantém backup local via localStorage.
 
-## Site publicado (GitHub Pages)
+Como executar localmente
 
-**https://kadunet0.github.io/chek-sem-acucar/**
+Basta abrir o arquivo index.html no navegador ou publicar o projeto em qualquer hospedagem estática.
 
-Use exatamente esse endereço (com `/chek-sem-acucar/` no final). Só `https://kadunet0.github.io/` mostra 404 — é normal.
+Projeto publicado
 
-Se não abrir de primeira: espere 1–2 minutos após um push, tente aba anônima ou atualize forçando (Ctrl+F5).
+Acesse a versão online:
+
+🔗 chek-sem-acucar
+
+Utilize o endereço completo com /chek-sem-acucar/ no final.
+
+Autor
+
+Desenvolvido por Carlos Neto
+
+GitHub: @kadunet0
+LinkedIn: Carlos Neto
