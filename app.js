@@ -4,10 +4,11 @@
   const START = new Date(2026, 3, 21); // 21/04/2026 (mês 3 = abril)
   const DAYS_COUNT = 30;
   const PEOPLE = [
-    { id: "carlos", label: "C", name: "Carlos" },
-    { id: "amanda", label: "Am", name: "Amanda" },
-    { id: "ana", label: "An", name: "Ana" },
+    { id: "carlos", label: "C", name: "Carlos", daysCount: DAYS_COUNT },
+    { id: "amanda", label: "Am", name: "Amanda", daysCount: DAYS_COUNT + 1 },
+    { id: "ana", label: "An", name: "Ana", daysCount: DAYS_COUNT },
   ];
+  const ROWS_COUNT = Math.max(...PEOPLE.map((p) => p.daysCount));
 
   const STORAGE_KEY = "chek-sem-acucar-v1";
   const RT_PATH = "chekSemAcucar";
@@ -102,6 +103,11 @@
       syncStatusEl.textContent =
         "Sincronizado em tempo real — quando alguém marca, todo mundo vê na hora.";
       syncStatusEl.classList.remove("sync-offline");
+    } else if (cfg && cfg.apiKey && cfg.databaseURL) {
+      syncStatusEl.hidden = false;
+      syncStatusEl.textContent =
+        "Só neste aparelho. No Firebase Console, libere leitura/escrita em chekSemAcucar (Realtime Database → Regras).";
+      syncStatusEl.classList.add("sync-offline");
     } else {
       syncStatusEl.hidden = false;
       syncStatusEl.textContent =
@@ -112,26 +118,25 @@
 
   function renderStats() {
     const counts = { carlos: 0, amanda: 0, ana: 0 };
-    for (let i = 0; i < DAYS_COUNT; i++) {
-      const d = addDays(START, i);
-      const key = getDayKey(d);
-      const day = getDayChecks(key);
-      PEOPLE.forEach((p) => {
-        if (day[p.id]) counts[p.id]++;
-      });
-    }
-    statsEl.innerHTML = `
-      <span class="stat-pill"><strong>Carlos</strong> ${counts.carlos}/${DAYS_COUNT}</span>
-      <span class="stat-pill"><strong>Amanda</strong> ${counts.amanda}/${DAYS_COUNT}</span>
-      <span class="stat-pill"><strong>Ana</strong> ${counts.ana}/${DAYS_COUNT}</span>
-    `;
+    PEOPLE.forEach((person) => {
+      for (let i = 0; i < person.daysCount; i++) {
+        const d = addDays(START, i);
+        const key = getDayKey(d);
+        const day = getDayChecks(key);
+        if (day[person.id]) counts[person.id]++;
+      }
+    });
+    statsEl.innerHTML = PEOPLE.map(
+      (p) =>
+        `<span class="stat-pill"><strong>${p.name}</strong> ${counts[p.id]}/${p.daysCount}</span>`
+    ).join("");
   }
 
   function render() {
     const today = new Date();
     daysEl.innerHTML = "";
 
-    for (let i = 0; i < DAYS_COUNT; i++) {
+    for (let i = 0; i < ROWS_COUNT; i++) {
       const date = addDays(START, i);
       const key = getDayKey(date);
       const dayChecks = getDayChecks(key);
@@ -153,16 +158,21 @@
       checks.setAttribute("aria-label", `Dia ${i + 1}`);
 
       PEOPLE.forEach((person) => {
+        const active = i < person.daysCount;
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "check-btn";
+        if (!active) btn.classList.add("inactive");
         btn.dataset.person = person.id;
         btn.dataset.dayKey = key;
+        btn.disabled = !active;
         btn.setAttribute(
           "aria-label",
-          `${person.name}, sem açúcar em ${formatDay(date)}`
+          active
+            ? `${person.name}, sem açúcar em ${formatDay(date)}`
+            : `${person.name}, fora do período neste dia`
         );
-        const on = !!dayChecks[person.id];
+        const on = active && !!dayChecks[person.id];
         btn.setAttribute("aria-pressed", on ? "true" : "false");
         if (on) btn.classList.add("on");
 
@@ -170,6 +180,7 @@
         btn.innerHTML = initial + tickSvg;
 
         btn.addEventListener("click", () => {
+          if (!active) return;
           const cur = !!getDayChecks(key)[person.id];
           const next = !cur;
           if (useFirebase && dbRef) {
@@ -201,6 +212,18 @@
     renderStats();
   }
 
+  function disableFirebase(reason, err) {
+    console.warn(reason, err || "");
+    if (dbRef) {
+      dbRef.off();
+      dbRef = null;
+    }
+    useFirebase = false;
+    state = loadState();
+    setSyncStatus();
+    render();
+  }
+
   function initFirebase() {
     if (
       !cfg ||
@@ -218,22 +241,43 @@
       useFirebase = true;
       setSyncStatus();
 
-      dbRef.on("value", (snap) => {
-        let remote = snap.val();
-        if (remote === null || typeof remote !== "object") remote = {};
+      // Mostra os dias na hora; o listener atualiza quando o Firebase responder.
+      state = loadState();
+      render();
 
-        if (!migrationChecked) {
-          migrationChecked = true;
-          if (isEmptyState(remote) && !isEmptyState(loadState())) {
-            dbRef.set(loadState());
-            return;
+      dbRef.on(
+        "value",
+        (snap) => {
+          let remote = snap.val();
+          if (remote === null || typeof remote !== "object") remote = {};
+
+          if (!migrationChecked) {
+            migrationChecked = true;
+            const local = loadState();
+            if (isEmptyState(remote) && !isEmptyState(local)) {
+              state = local;
+              render();
+              dbRef.set(local).catch((e) => {
+                disableFirebase(
+                  "Não foi possível enviar dados locais ao Firebase.",
+                  e
+                );
+              });
+              return;
+            }
           }
-        }
 
-        state = remote;
-        saveStateMirror();
-        render();
-      });
+          state = remote;
+          saveStateMirror();
+          render();
+        },
+        (err) => {
+          disableFirebase(
+            "Firebase sem permissão ou indisponível — usando só este aparelho.",
+            err
+          );
+        }
+      );
 
       return true;
     } catch (e) {

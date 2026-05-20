@@ -217,6 +217,11 @@ h1 {
   background: rgba(167, 139, 250, 0.15);
 }
 
+.check-btn.inactive {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .check-btn .initial {
   font-size: 0.65rem;
   font-weight: 700;
