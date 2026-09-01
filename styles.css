@@ -1,14 +1,15 @@
 :root {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface-hover: #334155;
-  --border: #334155;
-  --text: #f1f5f9;
-  --muted: #94a3b8;
-  --amanda: #a855f7;
-  --lorena: #38bdf8;
-  --todaro: #34d399;
-  --success: #34d399;
+  --bg: #0d0620;
+  --surface: #1a0f33;
+  --surface-hover: #26154a;
+  --border: #3a2160;
+  --text: #f5f0ff;
+  --muted: #a996c9;
+  --amanda: #c084fc;
+  --lorena: #f0abfc;
+  --todaro: #818cf8;
+  --success: #22d3ee;
+  --accent: linear-gradient(135deg, #8b5cf6, #d946ef);
   --radius: 14px;
   --safe-bottom: env(safe-area-inset-bottom, 0);
 }
@@ -31,12 +32,56 @@ body {
   color: var(--text);
   line-height: 1.45;
   padding-bottom: calc(1.5rem + var(--safe-bottom));
+  overflow-x: hidden;
+  position: relative;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+    animation: drift 16s ease-in-out infinite;
+  }
+
+  .glow-a {
+    width: 320px;
+    height: 320px;
+    top: -120px;
+    left: -80px;
+    background: #8b5cf6;
+    animation-delay: 0s;
+  }
+
+  .glow-b {
+    width: 280px;
+    height: 280px;
+    top: 260px;
+    right: -100px;
+    background: #d946ef;
+    animation-delay: -8s;
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, 40px) scale(1.15);
+    }
+  }
 }
 
 .app {
   max-width: 440px;
   margin: 0 auto;
   padding: 1.25rem 1rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
@@ -44,18 +89,22 @@ body {
 }
 
 .eyebrow {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--lorena);
+  margin: 0 0 0.4rem;
 }
 
 h1 {
-  font-size: 1.65rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
+  background: var(--accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
@@ -71,8 +120,8 @@ h1 {
   margin: 0.75rem 0 0;
   padding: 0.5rem 0.65rem;
   border-radius: var(--radius);
-  background: rgba(52, 211, 153, 0.12);
-  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.3);
 }
 
 .sync-status.sync-offline {
@@ -83,23 +132,60 @@ h1 {
 
 .stats {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
 }
 
-.stat-pill {
-  font-size: 0.75rem;
-  padding: 0.35rem 0.65rem;
+.stat-row {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr 2.6rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.stat-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-track {
+  height: 8px;
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
-  color: var(--muted);
+  overflow: hidden;
 }
 
-.stat-pill strong {
-  color: var(--text);
+.stat-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stat-fill.amanda {
+  background: linear-gradient(90deg, #7c3aed, var(--amanda));
+  box-shadow: 0 0 10px 0 rgba(192, 132, 252, 0.6);
+}
+.stat-fill.lorena {
+  background: linear-gradient(90deg, #c026d3, var(--lorena));
+  box-shadow: 0 0 10px 0 rgba(240, 171, 252, 0.6);
+}
+.stat-fill.todaro {
+  background: linear-gradient(90deg, #4f46e5, var(--todaro));
+  box-shadow: 0 0 10px 0 rgba(129, 140, 248, 0.6);
+}
+
+.stat-count {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.78rem;
   font-weight: 600;
+  color: var(--muted);
+  text-align: right;
 }
 
 .legend {
@@ -154,8 +240,9 @@ h1 {
 }
 
 .day-row.today {
-  border-color: var(--success);
-  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.25);
+  border-color: #a855f7;
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.3), 0 0 18px 0 rgba(168, 85, 247, 0.22);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.14), var(--surface) 60%);
 }
 
 .day-info {
@@ -204,17 +291,20 @@ h1 {
 
 .check-btn[data-person="amanda"].on {
   border-color: var(--amanda);
-  background: rgba(168, 85, 247, 0.18);
+  background: rgba(192, 132, 252, 0.18);
+  box-shadow: 0 0 12px 0 rgba(192, 132, 252, 0.45);
 }
 
 .check-btn[data-person="lorena"].on {
   border-color: var(--lorena);
-  background: rgba(56, 189, 248, 0.15);
+  background: rgba(240, 171, 252, 0.18);
+  box-shadow: 0 0 12px 0 rgba(240, 171, 252, 0.4);
 }
 
 .check-btn[data-person="todaro"].on {
   border-color: var(--todaro);
-  background: rgba(52, 211, 153, 0.15);
+  background: rgba(129, 140, 248, 0.18);
+  box-shadow: 0 0 12px 0 rgba(129, 140, 248, 0.45);
 }
 
 .check-btn.inactive {
@@ -237,7 +327,7 @@ h1 {
   display: none;
   width: 20px;
   height: 20px;
-  color: var(--success);
+  color: var(--text);
 }
 
 .check-btn.on .tick {
@@ -259,10 +349,13 @@ h1 {
   border: 1px dashed var(--border);
   border-radius: var(--radius);
   cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
 }
 
 .btn-secondary:active {
   background: var(--surface);
+  border-color: #a855f7;
+  color: var(--text);
 }
 
 @media (min-width: 380px) {
