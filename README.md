@@ -1,7 +1,8 @@
 # 🏆 chek-sem-acucar
 
 App mobile (HTML/CSS/JS) para marcar, dia a dia, quem ficou sem açúcar.  
-Competição a partir de **21/04/2026**, com duração de 30 dias.
+Competição a partir de **02/09/2026**, com duração de 30 dias.  
+Participantes: **Amanda, Lorena e Todaro**.
 
 ---
 
@@ -47,7 +48,7 @@ Para habilitar atualização em tempo real entre diferentes dispositivos:
 ```json
 {
   "rules": {
-    "chekSemAcucar": {
+    "chekSemAcucarV2": {
       ".read": true,
       ".write": true
     }
