@@ -5,8 +5,8 @@
   --border: #3a2160;
   --text: #f5f0ff;
   --muted: #a996c9;
-  --amanda: #a852ff;
-  --lorena: #ee58e6;
+  --amanda: #8e69fd;
+  --lorena: #f556a5;
   --todaro: #ff0000;
   --success: #22d3ee;
   --accent: linear-gradient(135deg, #8b5cf6, #d946ef);
@@ -154,30 +154,58 @@ h1 {
 }
 
 .stat-track {
+  position: relative;
   height: 8px;
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
-  overflow: hidden;
+  overflow: visible;
+}
+
+.stat-track::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--marker-color, var(--muted));
+  box-shadow: 0 0 8px 0 var(--marker-color, transparent);
+  z-index: 1;
+}
+
+.stat-track.amanda {
+  --marker-color: var(--amanda);
+}
+.stat-track.lorena {
+  --marker-color: var(--lorena);
+}
+.stat-track.todaro {
+  --marker-color: var(--todaro);
 }
 
 .stat-fill {
+  position: relative;
+  min-width: 10px;
   height: 100%;
   border-radius: 999px;
+  overflow: hidden;
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .stat-fill.amanda {
-  background: linear-gradient(90deg, #7c3aed, var(--amanda));
-  box-shadow: 0 0 10px 0 rgba(192, 132, 252, 0.6);
+  background: linear-gradient(90deg, #6d28d9, var(--amanda));
+  box-shadow: 0 0 10px 0 rgba(167, 139, 250, 0.6);
 }
 .stat-fill.lorena {
-  background: linear-gradient(90deg, #c026d3, var(--lorena));
-  box-shadow: 0 0 10px 0 rgba(240, 171, 252, 0.6);
+  background: linear-gradient(90deg, #a21caf, var(--lorena));
+  box-shadow: 0 0 10px 0 rgba(236, 72, 153, 0.6);
 }
 .stat-fill.todaro {
-  background: linear-gradient(90deg, #4f46e5, var(--todaro));
-  box-shadow: 0 0 10px 0 rgba(129, 140, 248, 0.6);
+  background: linear-gradient(90deg, #3730a3, var(--todaro));
+  box-shadow: 0 0 10px 0 rgba(99, 102, 241, 0.6);
 }
 
 .stat-count {
@@ -291,20 +319,20 @@ h1 {
 
 .check-btn[data-person="amanda"].on {
   border-color: var(--amanda);
-  background: rgba(192, 132, 252, 0.18);
-  box-shadow: 0 0 12px 0 rgba(192, 132, 252, 0.45);
+  background: rgba(167, 139, 250, 0.18);
+  box-shadow: 0 0 12px 0 rgba(167, 139, 250, 0.45);
 }
 
 .check-btn[data-person="lorena"].on {
   border-color: var(--lorena);
-  background: rgba(240, 171, 252, 0.18);
-  box-shadow: 0 0 12px 0 rgba(240, 171, 252, 0.4);
+  background: rgba(236, 72, 153, 0.18);
+  box-shadow: 0 0 12px 0 rgba(236, 72, 153, 0.4);
 }
 
 .check-btn[data-person="todaro"].on {
   border-color: var(--todaro);
-  background: rgba(129, 140, 248, 0.18);
-  box-shadow: 0 0 12px 0 rgba(129, 140, 248, 0.45);
+  background: rgba(99, 102, 241, 0.18);
+  box-shadow: 0 0 12px 0 rgba(99, 102, 241, 0.45);
 }
 
 .check-btn.inactive {
