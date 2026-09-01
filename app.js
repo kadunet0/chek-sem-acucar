@@ -131,7 +131,7 @@
       return `
         <div class="stat-row">
           <span class="stat-name">${p.name}</span>
-          <span class="stat-track">
+          <span class="stat-track ${p.id}">
             <span class="stat-fill ${p.id}" style="width: ${pct}%"></span>
           </span>
           <span class="stat-count">${counts[p.id]}/${p.daysCount}</span>
