@@ -8,6 +8,7 @@
   --amanda: #8e69fd;
   --lorena: #f556a5;
   --todaro: #ff0000;
+  --henrique: #22c55e;
   --success: #22d3ee;
   --accent: linear-gradient(135deg, #8b5cf6, #d946ef);
   --radius: 14px;
@@ -185,6 +186,9 @@ h1 {
 .stat-track.todaro {
   --marker-color: var(--todaro);
 }
+.stat-track.henrique {
+  --marker-color: var(--henrique);
+}
 
 .stat-fill {
   position: relative;
@@ -206,6 +210,10 @@ h1 {
 .stat-fill.todaro {
   background: linear-gradient(90deg, #3730a3, var(--todaro));
   box-shadow: 0 0 10px 0 rgba(99, 102, 241, 0.6);
+}
+.stat-fill.henrique {
+  background: linear-gradient(90deg, #15803d, var(--henrique));
+  box-shadow: 0 0 10px 0 rgba(34, 197, 94, 0.6);
 }
 
 .stat-count {
@@ -247,6 +255,9 @@ h1 {
 }
 .dot.todaro {
   background: var(--todaro);
+}
+.dot.henrique {
+  background: var(--henrique);
 }
 
 .days {
@@ -333,6 +344,12 @@ h1 {
   border-color: var(--todaro);
   background: rgba(99, 102, 241, 0.18);
   box-shadow: 0 0 12px 0 rgba(99, 102, 241, 0.45);
+}
+
+.check-btn[data-person="henrique"].on {
+  border-color: var(--henrique);
+  background: rgba(34, 197, 94, 0.18);
+  box-shadow: 0 0 12px 0 rgba(34, 197, 94, 0.45);
 }
 
 .check-btn.inactive {
