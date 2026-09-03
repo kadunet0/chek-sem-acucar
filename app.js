@@ -4,10 +4,11 @@
   const START = new Date(2026, 8, 2); // 02/09/2026 (mês 8 = setembro)
   const DAYS_COUNT = 30;
   const PEOPLE = [
-    { id: "amanda", label: "Am", name: "Amanda", daysCount: DAYS_COUNT },
-    { id: "lorena", label: "Lo", name: "Lorena", daysCount: DAYS_COUNT },
-    { id: "todaro", label: "T", name: "Todaro", daysCount: DAYS_COUNT },
-  ];
+  { id: "amanda", label: "Am", name: "Amanda", daysCount: DAYS_COUNT },
+  { id: "lorena", label: "Lo", name: "Lorena", daysCount: DAYS_COUNT },
+  { id: "todaro", label: "T", name: "Todaro", daysCount: DAYS_COUNT },
+  { id: "henrique", label: "H", name: "Henrique", daysCount: DAYS_COUNT },
+];
   const ROWS_COUNT = Math.max(...PEOPLE.map((p) => p.daysCount));
 
   const STORAGE_KEY = "chek-sem-acucar-v2";
@@ -304,7 +305,7 @@
 
   resetBtn.addEventListener("click", () => {
     const msg = useFirebase
-      ? "Apagar todas as marcações para Amanda, Lorena e Todaro em todos os aparelhes?"
+      ? "Apagar todas as marcações para Amanda, Lorena, Todaro e Henrique em todos os aparelhos?"
       : "Apagar todas as marcações deste aparelho? Esta ação não pode ser desfeita.";
     if (!confirm(msg)) return;
 
